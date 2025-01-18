@@ -21,6 +21,7 @@ CLOUDINARY_STORAGE = {
 }
 MEDIA_URL = '/media/'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -36,7 +37,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['8000-taiwoogbonyomi-artdrf-psq3czvg3gw.ws.codeinstitute-ide.net']
 
-
+CSRF_TRUSTED_ORIGINS = [
+    'https://8000-taiwoogbonyomi-artdrf-psq3czvg3gw.ws.codeinstitute-ide.net'
+]
 # Application definition
 
 INSTALLED_APPS = [

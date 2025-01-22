@@ -1,94 +1,62 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import status, permissions
+from rest_framework import generics, permissions, status
 from rest_framework.response import Response
-from rest_framework.views import APIView
-from rest_framework import generics
-from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from .models import Post
 from .serializers import PostSerializer
 from art_drf.permissions import IsOwnerOrReadOnly
 
 
-
 class PostList(generics.ListCreateAPIView):
-    queryset = Post.objects.all()
-    serializer_class = PostSerializer
-    permission_classes = [
-        permissions.IsAuthenticatedOrReadOnly
-    ]
+    """
+    Retrieve a list of posts or create a new post if authenticated.
     
+    - GET: Returns all posts, optionally filtered by title.
+    - POST: Creates a new post associated with the logged-in user.
+    """
+    queryset = Post.objects.all().order_by('-created_at')
+    serializer_class = PostSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-    def get(self, request):
-        posts = Post.objects.all()
-        title_filter = request.query_params.get('title', None)
+    def get_queryset(self):
+        """
+        Optionally filter posts by title (case insensitive).
+        """
+        queryset = super().get_queryset()
+        title_filter = self.request.query_params.get('title', None)
         if title_filter:
-            posts = posts.filter(title__icontains=title_filter)
-        posts = posts.order_by('-created_at')
-        serializer = PostSerializer(posts, many=True, context={'request': request})
-        return Response(serializer.data)
+            queryset = queryset.filter(title__icontains=title_filter)
+        return queryset
 
-    def post(self, request):
-        serializer = PostSerializer(
-            data=request.data, context={'request': request}
-        )
-        if serializer.is_valid():
-            try:
-                serializer.save(owner=request.user)
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            except Exception as e:
-                return Response(
-                {"error": str(e)}, 
+    def perform_create(self, serializer):
+        """
+        Associates the logged-in user with the new post.
+        """
+        try:
+            serializer.save(owner=self.request.user)
+        except Exception as e:
+            raise Response(
+                {"error": str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
 
-class PostDetail(RetrieveUpdateDestroyAPIView):
-    queryset = Post.objects.select_related('owner').all()
+class PostDetail(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Retrieve, update, or delete a post if the user is the owner.
+
+    - GET: Retrieve a specific post.
+    - PUT/PATCH: Update a post if the owner.
+    - DELETE: Remove a post if the owner.
+    """
+    queryset = Post.objects.select_related('owner')
     serializer_class = PostSerializer
     permission_classes = [IsOwnerOrReadOnly]
 
-    def get_object(self, pk):
-        post = get_object_or_404(
-            Post.objects.select_related('owner'), 
-            pk=pk
-        )
+    def get_object(self):
+        """
+        Get the post object or return a 404 error.
+        Ensures proper permission checks.
+        """
+        post = get_object_or_404(self.get_queryset(), pk=self.kwargs.get('pk'))
         self.check_object_permissions(self.request, post)
         return post
-
-    def get(self, request, pk):
-        post = self.get_object(pk)
-        serializer = PostSerializer(
-            post, context={'request': request}
-        )
-        return Response(serializer.data)
-
-    def put(self, request, pk):
-        post = self.get_object(pk)
-        serializer = PostSerializer(
-            post, 
-            data=request.data, 
-            context={'request': request}
-        )
-        if serializer.is_valid():
-            try:
-                serializer.save()
-                return Response(serializer.data)
-            except Exception as e:
-                return Response(
-                    {"error": str(e)}, 
-                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
-                )
-        return Response(
-            serializer.errors, 
-            status=status.HTTP_400_BAD_REQUEST
-        )
-
-
-    
-    def delete(self, request, pk):
-        post = self.get_object(pk)
-        post.delete()
-        return Response(
-            status=status.HTTP_204_NO_CONTENT
-        )
-

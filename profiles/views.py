@@ -1,5 +1,6 @@
 from django.db.models import Count
 from rest_framework import generics, permissions, filters
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.generics import get_object_or_404
 from .models import Profile
 from .serializers import ProfileSerializer
@@ -13,8 +14,18 @@ class ProfileList(generics.ListAPIView):
     """
 
     serializer_class = ProfileSerializer
-    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
-    search_fields = ['owner__username', 'name']
+    filter_backends = [
+        filters.SearchFilter, 
+        filters.OrderingFilter,
+        DjangoFilterBackend
+    ]
+    filterset_fields = [
+        'owner__following__followed__profile',
+    ]
+    search_fields = [
+        'owner__username', 
+        'name'
+    ]
     ordering_fields = [
         'posts_count', 
         'followers_count', 

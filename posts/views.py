@@ -1,5 +1,6 @@
 from django.db.models import Count
 from rest_framework import generics, permissions, filters
+from django_filters.rest_framework import DjangoFilterBackend
 from art_drf.permissions import IsOwnerOrReadOnly
 from .models import Post
 from .serializers import PostSerializer
@@ -14,7 +15,17 @@ class PostList(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     filter_backends = [
         filters.OrderingFilter,
-        filters.SearchFilter
+        filters.SearchFilter,
+        DjangoFilterBackend,
+    ]
+    filterset_fields = [
+        'owner__followed__owner__profile',
+        'likes__owner__profile',
+        'owner__profile',
+    ]
+    search_fields = [
+        'title', 
+        'owner__username'
     ]
     ordering_fields = [
         'likes_count',
@@ -23,8 +34,7 @@ class PostList(generics.ListCreateAPIView):
         'created_at',
         'updated_at',
     ]
-    search_fields = ['title', 'owner__username']
-
+   
     def get_queryset(self):
         """
         Get all posts with annotated like and comment counts.

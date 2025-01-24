@@ -60,7 +60,7 @@ REST_AUTH_SERIALIZERS = {
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = 'DEV' in os.environ
 
 ALLOWED_HOSTS = ['8000-taiwoogbonyomi-artdrf-psq3czvg3gw.ws.codeinstitute-ide.net', 'art-drf-api.herokuapp.com']
 
@@ -116,6 +116,7 @@ else:
          r"^https:\/\/.*\.codeinstitute-ide\.net$",
      ]
 CORS_ALLOWED_CREDENTIALS = True
+
 
 ROOT_URLCONF = 'art_drf.urls'
 

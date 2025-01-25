@@ -61,7 +61,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['8000-taiwoogbonyomi-artdrf-psq3czvg3gw.ws.codeinstitute-ide.net', 'art-drf-api.herokuapp.com']
+ALLOWED_HOSTS = ['8000-taiwoogbonyomi-artdrf-psq3czvg3gw.ws.codeinstitute-ide.net', 'art-drf-api-f47791898f85.herokuapp.com']
 
 CSRF_TRUSTED_ORIGINS = [
     'https://8000-taiwoogbonyomi-artdrf-psq3czvg3gw.ws.codeinstitute-ide.net'

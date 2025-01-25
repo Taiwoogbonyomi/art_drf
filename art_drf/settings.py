@@ -37,7 +37,6 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10,
     'DATETIME_FORMAT': '%d %b %Y',
 }
-
 if 'DEV' not in os.environ:
     REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
         'rest_framework.renderers.JSONRenderer',
@@ -116,7 +115,6 @@ else:
          r"^https:\/\/.*\.codeinstitute-ide\.net$",
      ]
 CORS_ALLOWED_CREDENTIALS = True
-
 
 ROOT_URLCONF = 'art_drf.urls'
 

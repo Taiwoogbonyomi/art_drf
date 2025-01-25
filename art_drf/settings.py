@@ -28,6 +28,9 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Check if we are running in dev or production environment, and
+# use either session or JWT authentication as appropriate.
+# Also set up pagination and date/time format return in our JSON objects.
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [(
         'rest_framework.authentication.SessionAuthentication'
@@ -44,12 +47,17 @@ if 'DEV' not in os.environ:
         'rest_framework.renderers.JSONRenderer',
     ]
 
+# Enable JWT authentication
 REST_USE_JWT = True
+# Ensure JWT authentication occurs over HTTPS
 JWT_AUTH_SECURE = True
+# Name access token
 JWT_AUTH_COOKIE = 'my-app-auth'
+# Name refresh token
 JWT_AUTH_REFRESH_COOKIE = 'my-refresh-token'
 JWT_AUTH_SAMESITE = 'None'
 
+# Specify custom user details serializer
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'art_drf.serializers.CurrentUserSerializer'
 }
@@ -63,7 +71,9 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'DEV' in os.environ
 
-ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOST'), '8000-taiwoogbonyomi-artdrf-psq3czvg3gw.ws.codeinstitute-ide.net']
+ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOST'), 
+    '8000-taiwoogbonyomi-artdrf-psq3czvg3gw.ws.codeinstitute-ide.net'
+]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://8000-taiwoogbonyomi-artdrf-psq3czvg3gw.ws.codeinstitute-ide.net'
@@ -109,6 +119,11 @@ MIDDLEWARE = [
 ]
 if 'DEV' in os.environ:
     CSRF_TRUSTED_ORIGINS = ['http://localhost:8000']
+
+if 'CLIENT_ORIGIN_DEV' in os.environ:
+    CORS_ALLOWED_ORIGIN_REGEXES = [
+         r"^https:\/\/.*\.codeinstitute-ide\.net$",
+    ]
 
 CORS_ALLOWED_CREDENTIALS = True
 
@@ -156,16 +171,28 @@ else:
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': (
+            'django.contrib.auth.password_validation'
+            '.UserAttributeSimilarityValidator',
+        ),
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': ( 
+            'django.contrib.auth.password_validation'
+            '.MinimumLengthValidator',
+        ),
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': (
+            'django.contrib.auth.password_validation'
+            '.CommonPasswordValidator',
+        ),
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': (
+            'django.contrib.auth.password_validation'
+            '.NumericPasswordValidator',
+        ),
     },
 ]
 

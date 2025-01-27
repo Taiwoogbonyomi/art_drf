@@ -2,7 +2,7 @@ from django.db.models import Count
 from rest_framework import generics, permissions, filters
 from django_filters.rest_framework import DjangoFilterBackend
 from art_drf.permissions import IsOwnerOrReadOnly
-from .models import Post
+from .models import ArtPost
 from .serializers import PostSerializer
 
 
@@ -39,7 +39,7 @@ class PostList(generics.ListCreateAPIView):
         """
         Get all posts with annotated like and comment counts.
         """
-        return Post.objects.annotate(
+        return ArtPost.objects.annotate(
             likes_count=Count('likes', distinct=True),
             comments_count=Count('comment', distinct=True)
         ).order_by('-created_at')

@@ -41,7 +41,7 @@ class ProfileList(generics.ListAPIView):
         and include post/follower/following counts.
         """
         queryset = Profile.objects.annotate(
-            posts_count=Count('owner__post', distinct=True),
+            posts_count=Count('owner__artpost', distinct=True),
             followers_count=Count('owner__followed', distinct=True),
             following_count=Count('owner__following', distinct=True)
         ).order_by('-created_at')
@@ -67,7 +67,7 @@ class ProfileDetail(generics.RetrieveUpdateAPIView):
         Retrieve profiles with related counts for optimized performance.
         """
         return Profile.objects.annotate(
-            posts_count=Count('owner__post', distinct=True),
+            posts_count=Count('owner__artpost', distinct=True),
             followers_count=Count('owner__followed', distinct=True),
             following_count=Count('owner__following', distinct=True)
         )

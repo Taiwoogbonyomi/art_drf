@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from posts.models import Post
+from posts.models import ArtPost
 from likes.models import Like
 
 
@@ -48,7 +48,7 @@ class PostSerializer(serializers.ModelSerializer):
         return None
 
     class Meta:
-        model = Post
+        model = ArtPost
         fields = [
             'id', 'owner', 'is_owner', 'profile_id',
             'profile_image', 'created_at', 'updated_at',

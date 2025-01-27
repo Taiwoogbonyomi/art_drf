@@ -72,7 +72,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = 'DEV' in os.environ
 
 ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOST'), 
-    '8000-taiwoogbonyomi-artdrf-psq3czvg3gw.ws.codeinstitute-ide.net'
+    '8000-taiwoogbonyomi-artdrf-o0qb0nick4u.ws.codeinstitute-ide.net'
 ]
 
 CSRF_TRUSTED_ORIGINS = [
@@ -162,7 +162,7 @@ if 'DEV' in os.environ:
      }
 else:
      DATABASES = {
-         'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+        'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
      }
 
 

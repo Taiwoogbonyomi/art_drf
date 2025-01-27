@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-class Post(models.Model):
+
+class ArtPost(models.Model):
     """
     Post model, related to 'owner', i.e. a User instance.
     Default image set so that we can always reference image.url.

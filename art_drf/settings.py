@@ -76,7 +76,7 @@ ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOST'),
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://8000-taiwoogbonyomi-artdrf-psq3czvg3gw.ws.codeinstitute-ide.net'
+    'https://8000-taiwoogbonyomi-artdrf-o0qb0nick4u.ws.codeinstitute-ide.net'
 ]
 # Application definition
 
@@ -102,6 +102,7 @@ INSTALLED_APPS = [
 
     'profiles',
     'posts',
+    'categories',
     'comments',
     'likes',
     'followers',
@@ -117,8 +118,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-if 'DEV' in os.environ:
-    CSRF_TRUSTED_ORIGINS = ['http://localhost:8000']
+
 
 if 'CLIENT_ORIGIN_DEV' in os.environ:
     CORS_ALLOWED_ORIGIN_REGEXES = [

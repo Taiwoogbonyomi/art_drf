@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from categories.models import Category
 
 
 class ArtPost(models.Model):
@@ -20,7 +21,10 @@ class ArtPost(models.Model):
         ('expressionism', 'Expressionism'),
         ('ink_wash', 'Ink Wash')
     ]
-    
+    category = models.ForeignKey(
+        Category, on_delete=models.SET_NULL, null=True, blank=True, 
+        related_name="art_posts"
+    )
     owner = models.ForeignKey(User, on_delete=models.CASCADE, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     updated_at = models.DateTimeField(auto_now=True)

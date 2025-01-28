@@ -19,6 +19,7 @@ class PostList(generics.ListCreateAPIView):
         DjangoFilterBackend,
     ]
     filterset_fields = [
+        'category',
         'owner__followed__owner__profile',
         'likes__owner__profile',
         'owner__profile',
@@ -62,7 +63,7 @@ class PostDetail(generics.RetrieveUpdateDestroyAPIView):
         """
         Get a single post with annotated like and comment counts.
         """
-        return Post.objects.annotate(
+        return ArtPost.objects.annotate(
             likes_count=Count('likes', distinct=True),
             comments_count=Count('comment', distinct=True)
         ).order_by('-created_at')

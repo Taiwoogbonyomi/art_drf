@@ -2,11 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from categories.models import Category
 
-
 class ArtPost(models.Model):
     """
     Post model, related to 'owner', i.e. a User instance.
-    Default image set so that we can always reference image.url.
     """
     image_filter_choices = [
         ('oil_painting', 'Oil Painting'),
@@ -21,23 +19,27 @@ class ArtPost(models.Model):
         ('expressionism', 'Expressionism'),
         ('ink_wash', 'Ink Wash')
     ]
-    category = models.ForeignKey(
-        Category, on_delete=models.SET_NULL, null=True, blank=True, 
-        related_name="art_posts"
-    )
+
     owner = models.ForeignKey(User, on_delete=models.CASCADE, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     updated_at = models.DateTimeField(auto_now=True)
     title = models.CharField(max_length=255)
     content = models.TextField(blank=True, default="No content provided.")
     image = models.ImageField(
-        upload_to='images/', 
-        default='../default_post_tx8nvq', 
+        upload_to='images/',
+        default='../default_post_tx8nvq',
         blank=True
     )
+    category = models.ForeignKey(
+        Category,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="art_posts"
+    )
     image_filter = models.CharField(
-        max_length=32, 
-        choices=image_filter_choices, 
+        max_length=32,
+        choices=image_filter_choices,
         default='oil_painting'
     )
 

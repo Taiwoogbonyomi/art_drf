@@ -1,21 +1,25 @@
 from django.db import models
-from django.contrib.auth.models import User
 
 class Category(models.Model):
-    CATEGORY_CHOICES = [
-        ('portrait', 'Portrait'),
-        ('landscape', 'Landscape'),
-    ]
     """
     Category model to group art posts into categories like Portrait, Landscape, etc.
     """
+    category_filter_choices = [
+        ('portrait', 'Portrait'),
+        ('landscape', 'Landscape'),
+        ('abstract', 'Abstract'),
+        ('still_life', 'Still Life'),
+    ]
+
     name = models.CharField(
         max_length=50,
-        choices=CATEGORY_CHOICES,
-        unique=True
+        choices=category_filter_choices,
+        unique=True,
+        default = "Landscape"
     )
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    
 
     class Meta:
         verbose_name = "Category"
@@ -23,4 +27,4 @@ class Category(models.Model):
         ordering = ['name']
 
     def __str__(self):
-        return self.name
+        return self.get_name_display()

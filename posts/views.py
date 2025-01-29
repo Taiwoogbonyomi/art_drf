@@ -3,7 +3,8 @@ from rest_framework import generics, permissions, filters
 from django_filters.rest_framework import DjangoFilterBackend
 from art_drf.permissions import IsOwnerOrReadOnly
 from .models import ArtPost
-from .serializers import PostSerializer
+from .serializers import ArtPostSerializer
+
 
 
 class PostList(generics.ListCreateAPIView):
@@ -11,7 +12,7 @@ class PostList(generics.ListCreateAPIView):
     List posts or create a post if logged in.
     The perform_create method associates the post with the logged-in user.
     """
-    serializer_class = PostSerializer
+    serializer_class = ArtPostSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     filter_backends = [
         filters.OrderingFilter,
@@ -56,7 +57,7 @@ class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     """
     Retrieve a post and edit or delete it if you own it.
     """
-    serializer_class = PostSerializer
+    serializer_class = ArtPostSerializer
     permission_classes = [IsOwnerOrReadOnly]
 
     def get_queryset(self):

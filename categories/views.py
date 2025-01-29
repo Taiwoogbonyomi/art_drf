@@ -1,9 +1,9 @@
 from rest_framework import generics
-from .models import Category
-from .serializers import CategorySerializer
+from categories.models import Category
+from categories.serializers import CategorySerializer
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
+from django_filters.rest_framework import DjangoFilterBackend
 
 class CategoryList(generics.ListAPIView):
     """
@@ -11,20 +11,9 @@ class CategoryList(generics.ListAPIView):
     """
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]  
+    permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [filters.SearchFilter, DjangoFilterBackend]
-    search_fields = ['name', 'description']  
-
-    def get_queryset(self):
-        """
-        Optionally, filter categories by name or description.
-        """
-        queryset = super().get_queryset()
-        search = self.request.query_params.get('search')
-        if search:
-            queryset = queryset.filter(name__icontains=search) | queryset.filter(description__icontains=search)
-
-        return queryset
+    search_fields = ['name', 'description']
 
 class CategoryDetail(generics.RetrieveAPIView):
     """

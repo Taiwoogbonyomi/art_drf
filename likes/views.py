@@ -13,43 +13,48 @@ class LikeList(generics.ListCreateAPIView):
 
     def get_queryset(self):
         """
-        Optionally, filter likes by the current user and art_post.
+        Optionally, filter likes by the current user and post.
         If the user is not authenticated, return an empty queryset.
         """
         user = self.request.user
         if user.is_authenticated:
             queryset = Like.objects.filter(owner=user)
-            
-            # Optional filtering by art_post
-            art_post = self.request.query_params.get('art_post')
-            if art_post:
+            post_id = self.request.query_params.get('post')  
+            if post_id:
                 try:
-                    art_post = int(art_post)
-                    queryset = queryset.filter(art_post_id=art_post)
+                    post_id = int(post_id)
+                    queryset = queryset.filter(post_id=post_id)
                 except ValueError:
-                    raise ValidationError("Invalid 'art_post' value.")
+                    raise ValidationError("Invalid 'post' value.")
             return queryset
-        else:
-            # Return an empty queryset if the user is not authenticated
+        else:    
             return Like.objects.none()
-
+   
     def perform_create(self, serializer):
         """
-        Prevent duplicate likes for the same ArtPost by the same user.
+        Prevent duplicate likes for the same post by the same user.
         """
         if not self.request.user.is_authenticated:
             raise ValidationError("You must be logged in to like a post.")
-        
-        art_post = serializer.validated_data.get('art_post')
-        if Like.objects.filter(owner=self.request.user, art_post=art_post).exists():
+
+        post = serializer.validated_data.get('post')  
+        if Like.objects.filter(owner=self.request.user, post=post).exists():
             raise ValidationError("You have already liked this post.")
-        
-        serializer.save(owner=self.request.user)
+
+        serializer.save(owner=self.request.user)  
 
 class LikeDetail(generics.RetrieveDestroyAPIView):
     """
-    Retrieve a like or delete it by id if you own it.
+    Retrieve a like or delete it by ID if you own it.
     """
     permission_classes = [IsOwnerOrReadOnly]
     serializer_class = LikeSerializer
     queryset = Like.objects.all()
+
+    def perform_destroy(self, instance):
+        """
+        Ensure only the owner can delete their like.
+        """
+        if instance.owner != self.request.user:
+            raise ValidationError("You can only delete your own likes.")
+        instance.delete()

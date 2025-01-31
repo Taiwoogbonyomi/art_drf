@@ -13,8 +13,10 @@ class CurrentUserSerializer(UserDetailsSerializer):
 
     def get_profile_image(self, obj):
         """
-        Safely retrieve the profile image URL or return a default value.
+        Returns the profile image URL if available, otherwise None.
+        Prevents AttributeError if the profile is missing.
         """
-        if hasattr(obj, 'profile') and obj.profile.image:
-            return obj.profile.image.url
-        return None  # Or provide a default image URL
+        profile = getattr(obj, 'profile', None)
+        if profile and profile.image:
+            return profile.image.url
+        return None  

@@ -16,13 +16,17 @@ def root_route(request):
         {"message": "Welcome to my Art drf API!"},
         status=status.HTTP_200_OK
     )
-
 @api_view(['POST'])
-# Fix for Django Rest Framework logout bug from Code Institute
-# DRF walkthrough
 def logout_route(request):
+    """
+    Logs out the user by clearing the JWT cookies.
+    """
     print('Doing logout')
-    response = Response()
+    response = Response({"detail": "Successfully logged out."}, status=status.HTTP_200_OK)
+    
+    response.delete_cookie(JWT_AUTH_COOKIE)
+    response.delete_cookie(JWT_AUTH_REFRESH_COOKIE)
+    
     response.set_cookie(
         key=JWT_AUTH_COOKIE,
         value='',
@@ -41,6 +45,5 @@ def logout_route(request):
         samesite=JWT_AUTH_SAMESITE,
         secure=JWT_AUTH_SECURE,
     )
+
     return response
-
-

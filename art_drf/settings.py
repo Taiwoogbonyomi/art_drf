@@ -76,7 +76,7 @@ ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOST'),
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://8000-taiwoogbonyomi-artdrf-cuga41ksgqz.ws.codeinstitute-ide.net/'
+    'https://8000-taiwoogbonyomi-artdrf-cuga41ksgqz.ws.codeinstitute-ide.net'
 ]
 # Application definition
 
@@ -129,7 +129,6 @@ if 'CLIENT_ORIGIN_DEV' in os.environ:
 
 CORS_ALLOW_CREDENTIALS = True
 
-CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ALLOW_HEADERS = [
     "authorization",

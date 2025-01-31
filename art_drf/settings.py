@@ -72,11 +72,11 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = 'DEV' in os.environ
 
 ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOST'), 
-    '8000-taiwoogbonyomi-artdrf-o0qb0nick4u.ws.codeinstitute-ide.net'
+    '8000-taiwoogbonyomi-artdrf-cuga41ksgqz.ws.codeinstitute-ide.net'
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://8000-taiwoogbonyomi-artdrf-o0qb0nick4u.ws.codeinstitute-ide.net'
+    'https://8000-taiwoogbonyomi-artdrf-cuga41ksgqz.ws.codeinstitute-ide.net/'
 ]
 # Application definition
 
@@ -125,9 +125,21 @@ if 'CLIENT_ORIGIN_DEV' in os.environ:
          r"^https:\/\/.*\.codeinstitute-ide\.net$",
     ]
 
+CORS_ALLOWED_ORIGINS = [
+    "https://3000-taiwoogbonyomi-arts-2c7ra0hyj3w.ws.codeinstitute-ide.net",
+]
+
 CORS_ALLOWED_CREDENTIALS = True
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOW_HEADERS = [
+    "authorization",
+    "content-type",
+    "x-csrftoken",
+    "x-requested-with",
+]
+
 
 ROOT_URLCONF = 'art_drf.urls'
 

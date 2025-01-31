@@ -140,6 +140,12 @@ CORS_ALLOW_HEADERS = [
     "x-requested-with",
 ]
 
+CORS_ALLOW_METHODS = [
+    "GET",
+    "POST",
+    "PUT",
+    "DELETE",
+]
 
 ROOT_URLCONF = 'art_drf.urls'
 

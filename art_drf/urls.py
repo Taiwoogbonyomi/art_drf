@@ -29,10 +29,10 @@ urlpatterns = [
     path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
 
     # Explicit app URLs
-    path('profiles/', include('profiles.urls')),
-    path('posts/', include('posts.urls')),
-    path('categories/', include('categories.urls')),
-    path('comments/', include('comments.urls')),
-    path('likes/', include('likes.urls')),
-    path('followers/', include('followers.urls')),
+    path('', include('profiles.urls')),
+    path('', include('posts.urls')),
+    path('', include('categories.urls')),
+    path('', include('comments.urls')),
+    path('', include('likes.urls')),
+    path('', include('followers.urls')),
 ]

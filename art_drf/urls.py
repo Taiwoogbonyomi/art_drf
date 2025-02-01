@@ -28,7 +28,7 @@ urlpatterns = [
     path('dj-rest-auth/', include('dj_rest_auth.urls')),
     path('dj-rest-auth/logout/', logout_route, name='logout'),
     path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
-     path("dj-rest-auth/registration/", RegisterView.as_view(), name="register"),
+    path("dj-rest-auth/registration/", RegisterView.as_view(), name="register"),
 
     # Explicit app URLs
     path('', include('profiles.urls')),

@@ -1,38 +1,11 @@
-from django.contrib.auth.models import User
 from django.db.models import Count
-from rest_framework import generics, permissions, filters, status
+from rest_framework import generics, permissions, filters
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
-from rest_framework.views import APIView
 from .models import Profile
-from .serializers import ProfileSerializer, UserSerializer
+from .serializers import ProfileSerializer
 from art_drf.permissions import IsOwnerOrReadOnly
-
-
-class RegisterUserAPIView(APIView):
-    """
-    API view for user registration.
-    Allows new users to sign up by providing a username and password.
-    """
-    permission_classes = [permissions.AllowAny]
-
-    def get(self, request):
-        serializer = NewUserSerializer(data=request.data)
-        
-        if serializer.is_valid():
-            username = serializer.validated_data['username']
-            password = serializer.validated_data['password']
-
-            # Create a new user and hash the password automatically
-            user = User.objects.create_user(username=username, password=password)
-
-            return Response(
-                {"message": "User registered successfully!", "user_id": user.id},
-                status=status.HTTP_201_CREATED
-            )
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ProfileList(generics.ListAPIView):

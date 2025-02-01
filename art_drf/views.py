@@ -1,19 +1,10 @@
-from rest_framework.decorators import api_view, APIView
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from .settings import(
     JWT_AUTH_COOKIE, JWT_AUTH_REFRESH_COOKIE,
     JWT_AUTH_SAMESITE, JWT_AUTH_SECURE
 )
-
-
-class RegisterUserAPIView(APIView):
-    def get(self, request, *args, **kwargs):
-        return Response({"message": "Use POST to register a new user"}, status=status.HTTP_200_OK)
-
-    def post(self, request, *args, **kwargs):
-        return Response({"message": "User registered successfully"}, status=status.HTTP_201_CREATED)
-
         
 @api_view(['GET'])
 def root_route(request):

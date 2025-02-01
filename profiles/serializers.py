@@ -3,7 +3,6 @@ from rest_framework import serializers
 from .models import Profile
 from followers.models import Follower
 
-
 class UserSerializer(serializers.ModelSerializer):
     """
     Serializer for creating new users.
@@ -16,22 +15,23 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ["id", "username", "email", "password", "password2"]
         extra_kwargs = {"email": {"required": True}}
 
+    def validate_email(self, value):
+        """Ensure email is unique."""
+        if User.objects.filter(email=value).exists():
+            raise serializers.ValidationError("A user with this email already exists.")
+        return value
+
     def validate(self, data):
-        """
-        Ensure passwords match.
-        """
+        """Ensure passwords match."""
         if data["password"] != data["password2"]:
             raise serializers.ValidationError({"password": "Passwords must match."})
         return data
 
     def create(self, validated_data):
-        """
-        Create a new user with a hashed password.
-        """
+        """Create a new user with a hashed password."""
         validated_data.pop("password2")  # Remove password2 before saving
-        user = User.objects.create_user(**validated_data)
-        return user
-
+        return User.objects.create_user(**validated_data)
+    
 
 class ProfileSerializer(serializers.ModelSerializer):
     """
@@ -63,21 +63,17 @@ class ProfileSerializer(serializers.ModelSerializer):
         ]
 
     def get_is_owner(self, obj):
-        """
-        Checks if the requesting user is the owner of the profile.
-        """
-        request = self.context.get("request", None)
-        return request and request.user == obj.owner
+        """Checks if the requesting user is the owner of the profile."""
+        request = self.context.get("request")
+        return bool(request and request.user == obj.owner)
 
     def get_following_id(self, obj):
         """
         Returns the ID of the Follower instance if the requesting user
         is following the profile owner, otherwise returns None.
         """
-        request = self.context.get("request", None)
+        request = self.context.get("request")
         if request and request.user.is_authenticated:
-            following = Follower.objects.filter(
-                owner=request.user, followed=obj.owner
-            ).first()
-            return following.id if following else None
+            following = Follower.objects.filter(owner=request.user, followed=obj.owner)
+            return following.first().id if following.exists() else None
         return None

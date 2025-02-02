@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from dj_rest_auth.registration.views import RegisterView
+from dj_rest_auth.views import UserDetailsView
 from .views import root_route, logout_route
 
 urlpatterns = [
@@ -25,6 +26,7 @@ urlpatterns = [
     
     # Authentication routes
     path('dj-rest-auth/registration/', RegisterView.as_view(), name='rest_register'),
+    path('dj-rest-auth/user/', UserDetailsView.as_view(), name='user_details'),
     path('dj-rest-auth/', include('dj_rest_auth.urls')),
     path('dj-rest-auth/logout/', logout_route),
     path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),

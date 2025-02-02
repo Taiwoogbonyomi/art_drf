@@ -1,5 +1,6 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework import status
 from .settings import(
     JWT_AUTH_COOKIE, JWT_AUTH_REFRESH_COOKIE,
@@ -46,3 +47,4 @@ def logout_route(request):
     )
 
     return response
+

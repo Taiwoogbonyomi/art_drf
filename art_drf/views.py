@@ -2,6 +2,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
+from rest_framework_simplejwt.tokens import RefreshToken
 from .settings import(
     JWT_AUTH_COOKIE, JWT_AUTH_REFRESH_COOKIE,
     JWT_AUTH_SAMESITE, JWT_AUTH_SECURE
@@ -48,3 +49,10 @@ def logout_route(request):
 
     return response
 
+def set_tokens(response, user):
+    refresh = RefreshToken.for_user(user)
+    access_token = str(refresh.access_token)
+
+    response.set_cookie('my-app-auth', access_token, secure=True, httponly=True, samesite='None')
+    response.set_cookie('my-refresh-token', str(refresh), secure=True, httponly=True, samesite='None')
+    return response

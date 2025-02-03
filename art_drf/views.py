@@ -49,10 +49,4 @@ def logout_route(request):
 
     return response
 
-def set_tokens(response, user):
-    refresh = RefreshToken.for_user(user)
-    access_token = str(refresh.access_token)
 
-    response.set_cookie('my-app-auth', access_token, secure=True, httponly=True, samesite='None')
-    response.set_cookie('my-refresh-token', str(refresh), secure=True, httponly=True, samesite='None')
-    return response

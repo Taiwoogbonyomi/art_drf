@@ -2,6 +2,7 @@ from rest_framework import serializers
 from likes.models import Like
 from django.db import IntegrityError
 
+
 class LikeSerializer(serializers.ModelSerializer):
     """
     Serializer for the Like model.

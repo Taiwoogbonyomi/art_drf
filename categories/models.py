@@ -1,8 +1,10 @@
 from django.db import models
 
+
 class Category(models.Model):
     """
-    Category model to group art posts into categories like Portrait, Landscape, etc.
+    Category model to group art posts into categories like
+    Portrait, Landscape, etc.
     """
     category_filter_choices = [
         ('portrait', 'Portrait'),
@@ -15,11 +17,10 @@ class Category(models.Model):
         max_length=50,
         choices=category_filter_choices,
         unique=True,
-        default = "Landscape"
+        default="Landscape"
     )
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    
 
     class Meta:
         verbose_name = "Category"

@@ -37,7 +37,7 @@ REST_FRAMEWORK = {
         if 'DEV' in os.environ
         else 'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
     ],
-     'DEFAULT_PAGINATION_CLASS':
+    'DEFAULT_PAGINATION_CLASS':
         'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
     'DATETIME_FORMAT': '%d %b %Y',
@@ -71,9 +71,9 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOST'), 
-    '8000-taiwoogbonyomi-artdrf-cuga41ksgqz.ws.codeinstitute-ide.net'
-]
+ALLOWED_HOSTS = [
+    os.environ.get('ALLOWED_HOST'),
+    '8000-taiwoogbonyomi-artdrf-cuga41ksgqz.ws.codeinstitute-ide.net']
 
 CSRF_TRUSTED_ORIGINS = [
     'https://8000-taiwoogbonyomi-artdrf-cuga41ksgqz.ws.codeinstitute-ide.net'
@@ -106,7 +106,7 @@ INSTALLED_APPS = [
     'comments',
     'likes',
     'followers',
-]   
+]
 SITE_ID = 1
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -120,20 +120,16 @@ MIDDLEWARE = [
 ]
 
 if 'CLIENT_ORIGIN' in os.environ:
-    CORS_ALLOWED_ORIGINS = [
-os.environ.get('CLIENT_ORIGIN_DEV')
-]
+    CORS_ALLOWED_ORIGINS = [os.environ.get('CLIENT_ORIGIN_DEV')]
 
 if 'CLIENT_ORIGIN_DEV' in os.environ:
     CORS_ALLOWED_ORIGIN_REGEXES = [
-        r"^https://.*\.codeinstitute-ide\.net$",
-]
+        r"^https://.*\.codeinstitute-ide\.net$",]
 
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  
-]
+    "http://localhost:3000",]
 
 CORS_ALLOW_HEADERS = [
     "authorization",
@@ -174,16 +170,16 @@ WSGI_APPLICATION = 'art_drf.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 if 'DEV' in os.environ:
-     DATABASES = {
+    DATABASES = {
          'default': {
              'ENGINE': 'django.db.backends.sqlite3',
              'NAME': BASE_DIR / 'db.sqlite3',
          }
-     }
+    }
 else:
-     DATABASES = {
+    DATABASES = {
         'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
-     }
+    }
 
 
 # Password validation
@@ -191,16 +187,20 @@ else:
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 

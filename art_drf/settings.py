@@ -73,7 +73,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     os.environ.get('ALLOWED_HOST'),
-    '8000-taiwoogbonyomi-artdrf-cuga41ksgqz.ws.codeinstitute-ide.net']
+    '127.0.0.1']
 
 CSRF_TRUSTED_ORIGINS = [
     'https://8000-taiwoogbonyomi-artdrf-cuga41ksgqz.ws.codeinstitute-ide.net'

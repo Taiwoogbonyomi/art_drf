@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from categories.models import Category
 
+
 class ArtPost(models.Model):
     """
     Post model, related to 'owner', i.e. a User instance.

@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from posts.models import ArtPost
 
+
 class Comment(models.Model):
     """
     Comment model, related to User and Post
@@ -17,7 +18,8 @@ class Comment(models.Model):
         verbose_name = "Comment"
         verbose_name_plural = "Comments"
         constraints = [
-            models.UniqueConstraint(fields=['owner', 'post'], name='unique_user_comment')
+            models.UniqueConstraint(
+                fields=['owner', 'post'], name='unique_user_comment')
         ]
 
     def __str__(self):

@@ -18,7 +18,9 @@ class Like(models.Model):
     class Meta:
         ordering = ['-created_at']
         constraints = [
-            models.UniqueConstraint(fields=['owner', 'post'], name='unique_like')
+            models.UniqueConstraint(
+                fields=['owner', 'post'], name='unique_like'
+            )
         ]
         verbose_name = "Like"
         verbose_name_plural = "Likes"

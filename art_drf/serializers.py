@@ -19,4 +19,4 @@ class CurrentUserSerializer(UserDetailsSerializer):
         profile = getattr(obj, 'profile', None)
         if profile and profile.image:
             return profile.image.url
-        return None  
+        return None

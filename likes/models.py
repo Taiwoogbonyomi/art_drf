@@ -27,3 +27,16 @@ class Like(models.Model):
 
     def __str__(self):
         return f'{self.owner.username} liked {self.post.title[:30]}'
+
+    @classmethod
+    def toggle_like(cls, user, post):
+        """
+        Toggles the like status for a given user and post.
+        If the user has already liked the post, the like is removed.
+        If not, a new like is created.
+        """
+        like, created = cls.objects.get_or_create(owner=user, post=post)
+        if not created:
+            like.delete()
+            return False  # Like removed
+        return True  # Like added

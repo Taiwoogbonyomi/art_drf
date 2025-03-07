@@ -4,6 +4,7 @@ from art_drf.permissions import IsOwnerOrReadOnly
 from likes.models import Like
 from likes.serializers import LikeSerializer
 
+
 class LikeList(generics.ListCreateAPIView):
     """
     List likes or create a like if logged in.
@@ -19,7 +20,7 @@ class LikeList(generics.ListCreateAPIView):
         user = self.request.user
         if user.is_authenticated:
             queryset = Like.objects.filter(owner=user)
-            post_id = self.request.query_params.get('post')  
+            post_id = self.request.query_params.get('post')
             if post_id:
                 try:
                     post_id = int(post_id)
@@ -27,9 +28,9 @@ class LikeList(generics.ListCreateAPIView):
                 except ValueError:
                     raise ValidationError("Invalid 'post' value.")
             return queryset
-        else:    
+        else:
             return Like.objects.none()
-   
+
     def perform_create(self, serializer):
         """
         Prevent duplicate likes for the same post by the same user.
@@ -41,7 +42,8 @@ class LikeList(generics.ListCreateAPIView):
         if Like.objects.filter(owner=self.request.user, post=post).exists():
             raise ValidationError("You have already liked this post.")
 
-        serializer.save(owner=self.request.user)  
+        serializer.save(owner=self.request.user)
+
 
 class LikeDetail(generics.RetrieveDestroyAPIView):
     """

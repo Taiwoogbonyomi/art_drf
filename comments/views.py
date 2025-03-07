@@ -4,6 +4,7 @@ from art_drf.permissions import IsOwnerOrReadOnly
 from .models import Comment
 from .serializers import CommentSerializer, CommentDetailSerializer
 
+
 class CommentList(generics.ListCreateAPIView):
     """
     Retrieve a list of comments or create a new comment if authenticated.
@@ -13,9 +14,9 @@ class CommentList(generics.ListCreateAPIView):
     """
     serializer_class = CommentSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    queryset = Comment.objects.select_related('owner', 'post').order_by('-created_at')
+    queryset = Comment.objects.select_related("owner", "post").filter(parent=None)
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['post']
+    filterset_fields = ['post', "parent"]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
@@ -31,5 +32,4 @@ class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
     """
     permission_classes = [IsOwnerOrReadOnly]
     serializer_class = CommentDetailSerializer
-    queryset = Comment.objects.select_related('owner', 'post').order_by('-created_at')
-
+    queryset = Comment.objects.select_related('owner', 'post')

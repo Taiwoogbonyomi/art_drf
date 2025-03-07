@@ -16,25 +16,39 @@ class CommentSerializer(serializers.ModelSerializer):
     updated_at = serializers.SerializerMethodField()
 
     def get_is_owner(self, obj):
-        request = self.context.get('request', None)
-        return request and request.user == obj.owner
+        """Checks if the requesting user is the owner of the comment."""
+        request = self.context.get("request")
+        return request.user.is_authenticated and obj.owner == request.user if request else False
 
     def get_created_at(self, obj):
-        return naturaltime(obj.created_at)
+        """Returns a human-readable timestamp (e.g., '5 minutes ago')."""
+        return {
+            "humanized": naturaltime(obj.created_at),
+            "iso_format": obj.created_at.isoformat(),
+        }
 
     def get_updated_at(self, obj):
-        return naturaltime(obj.updated_at)
+        """Returns a human-readable timestamp (e.g., '5 minutes ago')."""
+        return {
+            "humanized": naturaltime(obj.updated_at),
+            "iso_format": obj.updated_at.isoformat(),
+        }
 
     def get_profile_image(self, obj):
         if hasattr(obj.owner, 'profile') and obj.owner.profile.image:
             return obj.owner.profile.image.url
-        return None  
+        return None
 
     def validate_content(self, value):
+        """Ensures comment content is not empty or too long."""
         if not value.strip():
-            raise serializers.ValidationError("Comment content cannot be empty.")
+            raise serializers.ValidationError(
+                "Comment content cannot be empty."
+            )
         if len(value) > 1000:
-            raise serializers.ValidationError("Comment content exceeds 1000 characters.")
+            raise serializers.ValidationError(
+                "Comment content exceeds 1000 characters."
+            )
         return value
 
     class Meta:
@@ -47,13 +61,12 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class CommentDetailSerializer(CommentSerializer):
-        """
-        Serializer for the Comment model used in Detail view.
-        The 'post' field is read-only to prevent modification during updates,
-        ensuring it remains associated with the correct post.
-        """
-        post = serializers.ReadOnlyField(source='post.id')
+    """
+    Serializer for the Comment model used in Detail view.
+    The 'post' field is read-only to prevent modification during updates,
+    ensuring it remains associated with the correct post.
+    """
+    post = serializers.ReadOnlyField(source='post.id')
 
-        class Meta(CommentSerializer.Meta):
-            pass
-       
+    class Meta(CommentSerializer.Meta):
+        pass

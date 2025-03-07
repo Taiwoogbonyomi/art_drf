@@ -33,16 +33,16 @@ class LikeList(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         """
-        Prevent duplicate likes for the same post by the same user.
+        Toggle like: If the user has already liked the post, remove the like.
+        Otherwise, create a new like.
         """
-        if not self.request.user.is_authenticated:
-            raise ValidationError("You must be logged in to like a post.")
+        post = serializer.validated_data.get("post")
+        existing_like = Like.objects.filter(owner=self.request.user, post=post).first()
 
-        post = serializer.validated_data.get('post')  
-        if Like.objects.filter(owner=self.request.user, post=post).exists():
-            raise ValidationError("You have already liked this post.")
-
-        serializer.save(owner=self.request.user)
+        if existing_like:
+            existing_like.delete()
+        else:
+            serializer.save(owner=self.request.user)
 
 
 class LikeDetail(generics.RetrieveDestroyAPIView):

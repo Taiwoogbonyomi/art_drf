@@ -1,5 +1,3 @@
-# urls.py
-
 from django.urls import path
 from .views import CategoryList
 from .views import CategoryDetail

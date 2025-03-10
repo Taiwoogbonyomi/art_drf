@@ -5,15 +5,22 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
 
-class CategoryList(generics.ListAPIView):
+
+class CategoryList(generics.ListCreateAPIView):
     """
-    List all categories.
+    List all categories or create a new one if authenticated.
     """
-    queryset = Category.objects.all()
+    queryset = Category.objects.all().order_by("name")
     serializer_class = CategorySerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
-    filter_backends = [filters.SearchFilter, DjangoFilterBackend]
-    search_fields = ['name', 'description']
+    filter_backends = [
+        filters.SearchFilter,
+        DjangoFilterBackend,
+        filters.OrderingFilter,
+    ]
+    search_fields = ["name", "description"]
+    ordering_fields = ["name", "created_at"]
+
 
 class CategoryDetail(generics.RetrieveAPIView):
     """

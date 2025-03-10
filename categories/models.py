@@ -6,19 +6,7 @@ class Category(models.Model):
     Category model to group art posts into categories like
     Portrait, Landscape, etc.
     """
-    category_filter_choices = [
-        ('portrait', 'Portrait'),
-        ('landscape', 'Landscape'),
-        ('abstract', 'Abstract'),
-        ('still_life', 'Still Life'),
-    ]
-
-    name = models.CharField(
-        max_length=50,
-        choices=category_filter_choices,
-        unique=True,
-        default="Landscape"
-    )
+    name = models.CharField(max_length=50, unique=True)
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -28,4 +16,4 @@ class Category(models.Model):
         ordering = ['name']
 
     def __str__(self):
-        return self.get_name_display()
+        return self.name

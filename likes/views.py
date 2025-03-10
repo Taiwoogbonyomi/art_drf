@@ -37,7 +37,8 @@ class LikeList(generics.ListCreateAPIView):
         Otherwise, create a new like.
         """
         post = serializer.validated_data.get("post")
-        existing_like = Like.objects.filter(owner=self.request.user, post=post).first()
+        existing_like = Like.objects.filter(
+            owner=self.request.user, post=post).first()
 
         if existing_like:
             existing_like.delete()

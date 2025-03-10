@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 from categories.models import Category
-from cloudinary.models import CloudinaryField
 
 
 class ArtPost(models.Model):
@@ -28,11 +27,7 @@ class ArtPost(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     title = models.CharField(max_length=255)
     content = models.TextField(blank=True, default="No content provided.")
-    image = CloudinaryField(
-        'image',
-        default='../default_post_tx8nvq',
-        blank=True
-    )
+    image = models.ImageField(upload_to='images/', blank=True, null=True)
     category = models.ForeignKey(
         Category,
         on_delete=models.SET_NULL,

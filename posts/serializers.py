@@ -24,8 +24,8 @@ class ArtPostSerializer(serializers.ModelSerializer):
         if value.size > max_size:
             raise serializers.ValidationError(
                 'Image size must be less than 2MB!')
-        width = getattr(value, 'width', 0)
-        height = getattr(value, 'height', 0)
+        width = getattr(value, 'width', None)
+        height = getattr(value, 'height', None)
 
         if width > max_dimension or height > max_dimension:
             raise serializers.ValidationError(
@@ -42,7 +42,7 @@ class ArtPostSerializer(serializers.ModelSerializer):
 
     def get_is_owner(self, obj):
         """Check if the authenticated user owns the post."""
-        request = self.context.get('request')
+        request = self.context.get('request') 
         return request.user == obj.owner if request else False
 
     def get_like_id(self, obj):

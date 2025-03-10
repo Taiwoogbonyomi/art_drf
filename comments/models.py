@@ -10,7 +10,10 @@ class Comment(models.Model):
     Comment model, related to User and Post
     """
     owner = models.ForeignKey(User, on_delete=models.CASCADE, db_index=True)
-    post = models.ForeignKey(ArtPost, on_delete=models.CASCADE, db_index=True)
+    post = models.ForeignKey(
+        ArtPost, on_delete=models.CASCADE,
+        db_index=True, related_name="comments"
+    )
     parent = models.ForeignKey(
         "self", on_delete=models.CASCADE, null=True, blank=True,
         related_name="replies"

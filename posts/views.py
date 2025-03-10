@@ -43,7 +43,7 @@ class PostList(generics.ListCreateAPIView):
         """
         return ArtPost.objects.annotate(
             likes_count=Count('likes', distinct=True),
-            comments_count=Count('comment', distinct=True)
+            comments_count=Count('comments', distinct=True)
         ).order_by('-created_at')
 
     def perform_create(self, serializer):
@@ -66,5 +66,5 @@ class PostDetail(generics.RetrieveUpdateDestroyAPIView):
         """
         return ArtPost.objects.annotate(
             likes_count=Count('likes', distinct=True),
-            comments_count=Count('comment', distinct=True)
+            comments_count=Count('comments', distinct=True)
         ).order_by('-created_at')

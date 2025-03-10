@@ -17,29 +17,34 @@ class ArtPostSerializer(serializers.ModelSerializer):
     )
 
     def validate_image(self, value):
-        if value.size > 2 * 1024 * 1024:
-            raise serializers.ValidationError('Image size larger than 2MB!')
-        width = getattr(value, 'width', None)
-        height = getattr(value, 'height', None)
-        if height and height > 4096:
-            raise serializers.ValidationError('Image height larger than 4096px!')
-        if width and width > 4096:
-            raise serializers.ValidationError('Image width larger than 4096px!')
+        """Validate image size and dimensions."""
+        max_size = 2 * 1024 * 1024  # 2MB
+        max_dimension = 4096
+
+        if value.size > max_size:
+            raise serializers.ValidationError(
+                'Image size must be less than 2MB!')
+        width = getattr(value, 'width', 0)
+        height = getattr(value, 'height', 0)
+
+        if width > max_dimension or height > max_dimension:
+            raise serializers.ValidationError(
+                f"Image dimensions must be at most {max_dimension}px."
+            )
+
         return value
 
-
     def to_representation(self, instance):
+        """Add human-readable image filter display."""
         data = super().to_representation(instance)
         data['image_filter_display'] = instance.get_image_filter_display()
         return data
 
-
-
     def get_is_owner(self, obj):
-        request = self.context.get('request')        
-        return request and request.user == obj.owner
+        """Check if the authenticated user owns the post."""
+        request = self.context.get('request')
+        return request.user == obj.owner if request else False
 
-    
     def get_like_id(self, obj):
         """
         Returns the ID of the Like instance if the requesting user
@@ -56,6 +61,7 @@ class ArtPostSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'owner', 'is_owner', 'profile_id',
             'profile_image', 'created_at', 'updated_at',
-            'title', 'content','category','category_name', 'image', 'image_filter', 
-            'like_id', 'likes_count', 'comments_count',
+            'title', 'content', 'category', 'category_name',
+            'image', 'image_filter', 'like_id', 'likes_count',
+            'comments_count',
         ]

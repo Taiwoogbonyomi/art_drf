@@ -1,33 +1,35 @@
 from django.db import models
 from django.contrib.auth.models import User
 from categories.models import Category
+from cloudinary.models import CloudinaryField
 
 
 class ArtPost(models.Model):
     """
-    Post model, related to 'owner', i.e. a User instance.
+    Post model, related to 'owner', i.e., a User instance.
+    Uses Cloudinary for image uploads.
     """
-    image_filter_choices = [
-        ('oil_painting', 'Oil Painting'),
-        ('acrylic', 'Acrylic'),
-        ('watercolor', 'Watercolor'),
-        ('impressionist', 'Impressionist'),
-        ('abstract_art', 'Abstract Art'),
-        ('pencil_sketch', 'Pencil Sketch'),
-        ('cubism', 'Cubism'),
-        ('pop_art', 'Pop Art'),
-        ('surrealism', 'Surrealism'),
-        ('expressionism', 'Expressionism'),
-        ('ink_wash', 'Ink Wash')
-    ]
+
+    class ImageFilterChoices(models.TextChoices):
+        OIL_PAINTING = "oil_painting", "Oil Painting"
+        ACRYLIC = "acrylic", "Acrylic"
+        WATERCOLOR = "watercolor", "Watercolor"
+        IMPRESSIONIST = "impressionist", "Impressionist"
+        ABSTRACT_ART = "abstract_art", "Abstract Art"
+        PENCIL_SKETCH = "pencil_sketch", "Pencil Sketch"
+        CUBISM = "cubism", "Cubism"
+        POP_ART = "pop_art", "Pop Art"
+        SURREALISM = "surrealism", "Surrealism"
+        EXPRESSIONISM = "expressionism", "Expressionism"
+        INK_WASH = "ink_wash", "Ink Wash"
 
     owner = models.ForeignKey(User, on_delete=models.CASCADE, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     updated_at = models.DateTimeField(auto_now=True)
     title = models.CharField(max_length=255)
     content = models.TextField(blank=True, default="No content provided.")
-    image = models.ImageField(
-        upload_to='images/',
+    image = CloudinaryField(
+        'image',
         default='../default_post_tx8nvq',
         blank=True
     )
@@ -36,12 +38,13 @@ class ArtPost(models.Model):
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
-        related_name="art_posts"
+        related_name="art_posts",
+        db_index=True,
     )
     image_filter = models.CharField(
         max_length=32,
-        choices=image_filter_choices,
-        default='oil_painting'
+        choices=ImageFilterChoices.choices,
+        default=ImageFilterChoices.OIL_PAINTING,
     )
 
     class Meta:

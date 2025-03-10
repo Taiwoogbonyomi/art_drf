@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from posts.models import ArtPost, Category
+from posts.models import ArtPost
 from likes.models import Like
 
 
@@ -12,7 +12,7 @@ class ArtPostSerializer(serializers.ModelSerializer):
     likes_count = serializers.ReadOnlyField()
     comments_count = serializers.ReadOnlyField()
     category_name = serializers.CharField(
-        source='category.name', 
+        source='category.name',
         read_only=True
     )
 

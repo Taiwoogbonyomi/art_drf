@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 from posts.models import ArtPost
-from comments.models import Comment
 
 
 class Like(models.Model):
@@ -41,21 +40,3 @@ class Like(models.Model):
             like.delete()
             return False  # Like removed
         return True  # Like added
-
-
-class CommentLike(models.Model):
-    """
-    Model to track likes on comments.
-    Ensures a user can only like a comment once.
-    """
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    comment = models.ForeignKey(
-        Comment, related_name="likes", on_delete=models.CASCADE
-    )
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        unique_together = ("owner", "comment")  # Prevent duplicate likes
-
-    def __str__(self):
-        return f"{self.owner.username} liked {self.comment.id}"

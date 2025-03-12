@@ -12,12 +12,12 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
-import re
+import re  # noqa: F401
 import dj_database_url
 
 
 if os.path.exists('env.py'):
-    import env
+    import env  # noqa: F401
 
 CLOUDINARY_STORAGE = {
     'CLOUDINARY_URL': os.environ.get('CLOUDINARY_URL')

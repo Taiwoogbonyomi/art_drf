@@ -6,7 +6,6 @@ from .models import ArtPost
 from .serializers import ArtPostSerializer
 
 
-
 class PostList(generics.ListCreateAPIView):
     """
     List posts or create a post if logged in.
@@ -26,7 +25,7 @@ class PostList(generics.ListCreateAPIView):
         'owner__profile',
     ]
     search_fields = [
-        'title', 
+        'title',
         'owner__username'
     ]
     ordering_fields = [
@@ -36,7 +35,7 @@ class PostList(generics.ListCreateAPIView):
         'created_at',
         'updated_at',
     ]
-   
+
     def get_queryset(self):
         """
         Get all posts with annotated like and comment counts.

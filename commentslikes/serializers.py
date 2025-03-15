@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from commentlike.models import CommentLike
+from commentslikes.models import CommentsLikes
 
 
 class CommentLikeSerializer(serializers.ModelSerializer):
@@ -10,7 +10,7 @@ class CommentLikeSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source="owner.username")
 
     class Meta:
-        model = CommentLike
+        model = CommentsLikes
         fields = ["id", "owner", "comment", "created_at"]
 
     def create(self, validated_data):
@@ -21,7 +21,7 @@ class CommentLikeSerializer(serializers.ModelSerializer):
         from django.db import IntegrityError
 
         try:
-            return CommentLike.objects.create(**validated_data)
+            return CommentsLikes.objects.create(**validated_data)
         except IntegrityError:
             raise serializers.ValidationError(
                 {"detail": "You have already liked this comment."}

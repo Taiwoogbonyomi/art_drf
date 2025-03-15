@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from comments.models import Comment
 
 
-class CommentLike(models.Model):
+class CommentsLikes(models.Model):
     """
     Model to track likes on comments.
     Ensures a user can only like a comment once.
@@ -18,7 +18,7 @@ class CommentLike(models.Model):
         ordering = ['-created_at']
         constraints = [
             models.UniqueConstraint(
-                fields=['owner', 'comment'], name='unique_comment_like'
+                fields=['owner', 'comment'], name='unique_comments_likes'
             )
         ]
 

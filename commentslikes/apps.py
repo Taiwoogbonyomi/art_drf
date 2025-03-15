@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class CommentlikeConfig(AppConfig):
+class CommentslikesConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'commentlike'
+    name = 'commentslikes'

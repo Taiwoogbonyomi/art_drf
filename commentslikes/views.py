@@ -2,9 +2,10 @@ from rest_framework import generics, permissions
 from rest_framework.exceptions import ValidationError
 from commentslikes.models import CommentLike
 from commentslikes.serializers import CommentLikeSerializer
+from art_drf.permissions import IsOwnerOrReadOnly
 
 
-class CommentLikeList(generics.ListCreateAPIView):
+class CommentsLikesList(generics.ListCreateAPIView):
     """
     List all likes on comments or create a like if logged in.
     Prevents duplicate likes.
@@ -41,3 +42,20 @@ class CommentLikeList(generics.ListCreateAPIView):
             raise ValidationError("You have already liked this comment.")
 
         serializer.save(owner=self.request.user)
+
+
+class CommentsLikesDetail(generics.RetrieveDestroyAPIView):
+    """
+    Retrieve a comment like or delete it if you own it.
+    """
+    permission_classes = [IsOwnerOrReadOnly]
+    serializer_class = CommentLikeSerializer
+    queryset = CommentLike.objects.all()
+
+    def perform_destroy(self, instance):
+        """
+        Ensure only the owner can delete their like.
+        """
+        if instance.owner != self.request.user:
+            raise ValidationError("You can only remove your own like.")
+        instance.delete()

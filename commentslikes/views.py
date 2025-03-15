@@ -1,6 +1,6 @@
 from rest_framework import generics, permissions
 from rest_framework.exceptions import ValidationError
-from commentslikes.models import CommentLike
+from commentslikes.models import CommentsLikes
 from commentslikes.serializers import CommentLikeSerializer
 from art_drf.permissions import IsOwnerOrReadOnly
 
@@ -19,7 +19,7 @@ class CommentsLikesList(generics.ListCreateAPIView):
         If the user is not authenticated, return an empty queryset.
         """
         user = self.request.user
-        queryset = CommentLike.objects.all()
+        queryset = CommentsLikes.objects.all()
         comment_id = self.request.query_params.get("comment")
 
         if comment_id:
@@ -27,14 +27,14 @@ class CommentsLikesList(generics.ListCreateAPIView):
 
         if user.is_authenticated:
             return queryset
-        return CommentLike.objects.none()
+        return CommentsLikes.objects.none()
 
     def perform_create(self, serializer):
         """
         Prevent duplicate likes for the same comment by the same user.
         """
         comment = serializer.validated_data.get("comment")
-        existing_like = CommentLike.objects.filter(
+        existing_like = CommentsLikes.objects.filter(
             owner=self.request.user, comment=comment
         ).first()
 
@@ -50,7 +50,7 @@ class CommentsLikesDetail(generics.RetrieveDestroyAPIView):
     """
     permission_classes = [IsOwnerOrReadOnly]
     serializer_class = CommentLikeSerializer
-    queryset = CommentLike.objects.all()
+    queryset = CommentsLikes.objects.all()
 
     def perform_destroy(self, instance):
         """

@@ -11,12 +11,17 @@ class Comment(models.Model):
     """
     owner = models.ForeignKey(User, on_delete=models.CASCADE, db_index=True)
     post = models.ForeignKey(
-        ArtPost, on_delete=models.CASCADE,
-        db_index=True, related_name="comments"
+        ArtPost, 
+        on_delete=models.CASCADE,
+        db_index=True, 
+        related_name="comments",
     )
     parent = models.ForeignKey(
-        "self", on_delete=models.CASCADE, null=True, blank=True,
-        related_name="replies"
+        "self", 
+        on_delete=models.CASCADE, 
+        null=True, 
+        blank=True,
+        related_name="replies",
     )
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -28,9 +33,12 @@ class Comment(models.Model):
         verbose_name_plural = "Comments"
 
     def __str__(self):
-        return f'Comment by {self.owner.username} on {
-            getattr(self.post, "title", "Unknown Post")
-            [:20]}: {self.content[:30]}...'
+        post_title = getattr(self.post, "title", "Unknown Post")[:20]
+        comment_preview = self.content[:30]
+        return (
+            f"Comment by {self.owner.username} on {post_title}:"
+            f"{comment_preview}..."
+        )
 
     @property
     def is_reply(self):

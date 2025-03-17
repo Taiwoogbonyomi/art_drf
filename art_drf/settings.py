@@ -69,9 +69,10 @@ REST_AUTH_SERIALIZERS = {
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = 'DEV' in os.environ
 
-ALLOWED_HOSTS = ['127.0.0.1', 'art-drf-api-f47791898f85.herokuapp.com']
+ALLOWED_HOSTS = [ os.environ.get('ALLOWED_HOST')
+]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://8000-taiwoogbonyomi-artdrf-cuga41ksgqz.ws.codeinstitute-ide.net'
@@ -117,23 +118,14 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-if 'CLIENT_ORIGIN' in os.environ:
-    CORS_ALLOWED_ORIGINS = [os.environ.get('CLIENT_ORIGIN_DEV')]
-
-if 'CLIENT_ORIGIN_DEV' in os.environ:
-    CORS_ALLOWED_ORIGIN_REGEXES = [
-        r"^https://.*\.codeinstitute-ide\.net$",]
-
-
-CORS_ALLOWED_ORIGINS = [
-    origin for origin in [
-     os.environ.get('CLIENT_ORIGIN'),
-     os.environ.get('CLIENT_ORIGIN_DEV')
-    ] if origin
-]
+# Allow all CORS origins so that this API can be used with native mobile apps
+CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ALLOW_CREDENTIALS = True
+
+if 'DEV' in os.environ:
+    CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
+
 
 CORS_ALLOW_HEADERS = [
     "authorization",

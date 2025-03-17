@@ -71,7 +71,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'art_drf.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'art-drf-api-f47791898f85.herokuapp.com']
 
 CSRF_TRUSTED_ORIGINS = [
     'https://8000-taiwoogbonyomi-artdrf-cuga41ksgqz.ws.codeinstitute-ide.net'
@@ -125,7 +125,6 @@ if 'CLIENT_ORIGIN_DEV' in os.environ:
     CORS_ALLOWED_ORIGIN_REGEXES = [
         r"^https://.*\.codeinstitute-ide\.net$",]
 
-CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOWED_ORIGINS = [
     origin for origin in [
@@ -133,6 +132,8 @@ CORS_ALLOWED_ORIGINS = [
      os.environ.get('CLIENT_ORIGIN_DEV')
     ] if origin
 ]
+
+CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOW_HEADERS = [
     "authorization",

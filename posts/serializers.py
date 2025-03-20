@@ -28,6 +28,9 @@ class ArtPostSerializer(serializers.ModelSerializer):
         width = getattr(value, 'width', None)
         height = getattr(value, 'height', None)
 
+        if width is None or height is None:
+            raise serializers.ValidationError("Invalid image file.")
+
         if width > max_dimension or height > max_dimension:
             raise serializers.ValidationError(
                 f"Image dimensions must be at most {max_dimension}px."

@@ -1,0 +1,282 @@
+[
+    {
+      "model": "auth.user",
+      "pk": 1,
+      "fields": {
+        "password": "pbkdf2_sha256$600000$p26SoOwWAT8CjjCzBwKKax$oURvCABIaqMq30VhvlHGcr41rmv81ziAsiSJIa/x500=",
+        "last_login": "2025-03-07T23:34:42.509Z",
+        "is_superuser": true,
+        "username": "Taiwo",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2025-01-16T22:17:39.280Z",
+        "groups": [],
+        "user_permissions": []
+      }
+    },
+    {
+      "model": "auth.user",
+      "pk": 2,
+      "fields": {
+        "password": "pbkdf2_sha256$600000$sA6YJqC566B6l3JCvhfGpQ$WvXHLzDnm2NrH6h3Mq5SllT+BTFeNQzmSRKS0iMvBPU=",
+        "last_login": "2025-01-24T20:19:52.126Z",
+        "is_superuser": true,
+        "username": "Jasmin",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2025-01-20T10:31:20.222Z",
+        "groups": [],
+        "user_permissions": []
+      }
+    },
+    {
+      "model": "auth.user",
+      "pk": 3,
+      "fields": {
+        "password": "pbkdf2_sha256$600000$UoDluakGNMEVLq9VjOnK6q$cGzSahBJPmP7IVGHWizFcOl8gbB5Ak/IzWCpDVqpoe8=",
+        "last_login": "2025-01-31T22:17:01.190Z",
+        "is_superuser": true,
+        "username": "Jaden",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2025-01-20T10:32:00.663Z",
+        "groups": [],
+        "user_permissions": []
+      }
+    },
+    {
+      "model": "sessions.session",
+      "pk": "44u17lffji92hshcyhn1w9vikrmhe800",
+      "fields": {
+        "session_data": ".eJxVjDkOwjAQRe_iGllexhslfc5gjccTHECJlKVC3J1ESgHte-__t8i4rS1vC895qOIqtLj8soL05PEQ9YHjfZI0jes8FHkk8rSL7KbKr9vZ_h00XNq-jgU0RkDnOZFLxu4gxgS2Dwos6ATsmYjBmz6hUzEGXRVBsOyoGCs-X78TNvo:1tcuzy:TgAwXukmuYq_rfY1O-3wozTdReO1iWsYdd6Wd4aHwfE",
+        "expire_date": "2025-02-11T23:28:02.710Z"
+      }
+    },
+    {
+      "model": "sessions.session",
+      "pk": "bzn19qdyatqpif727cmyvob5ula2unb3",
+      "fields": {
+        "session_data": ".eJxVjDsOAiEUAO9CbQj_j6X9noEA7yGrBpJltzLe3ZBsoe3MZN4kxGOv4Ri4hRXIlUhy-WUp5ie2KeAR273T3Nu-rYnOhJ520KUDvm5n-zeocdS5LcWUwny0HkEz43y2AtHz4kTKKkfPiktgGUMORjkhpLKouRNaWiYU-XwB8ww3WA:1tdzJt:5GYDNd6g7KTatMw87N7dNT_Pnv0alnE4jm-2i_-CC44",
+        "expire_date": "2025-02-14T22:17:01.192Z"
+      }
+    },
+    {
+      "model": "sessions.session",
+      "pk": "djs8q4dkut0my60l5pq9rgpqas1ozpu8",
+      "fields": {
+        "session_data": ".eJxVjDsOwjAQRO_iGlnx36akzxms3bWDA8iW4qRC3J1ESgFTznszbxZhW0vcel7inNiVSXb57RDomesB0gPqvXFqdV1m5IfCT9r52FJ-3U7376BAL_uapLda20w4JJw8GSe8tOCVyRi0wwB6kMaKMFEQdo9TpEBLlWQQzgP7fAHSoTb1:1tbQ9g:3KVi4qXWGh_DA2bAemhJvWF1WJ8kcJ3diOPWn_8nLGQ",
+        "expire_date": "2025-02-07T20:19:52.128Z"
+      }
+    },
+    {
+      "model": "sessions.session",
+      "pk": "u6p8q3scuv65oi96k746rxd9g7es52o5",
+      "fields": {
+        "session_data": ".eJxVjDsOwjAQBe_iGln-a01Jzxms9XqNA8iR4qRC3B0ipYD2zcx7iYTb2tI2eElTEWehxel3y0gP7jsod-y3WdLc12XKclfkQYe8zoWfl8P9O2g42reuyK5qQ-g5oLMKfXAxgnfOogUMkQigFltJWZ2hRmWyscDeF2TwLN4f6hM4DQ:1tqhDG:omUi9TWD_oRlAptEd_7beVkMefz6213hO50TwRzIQPc",
+        "expire_date": "2025-03-21T23:34:42.514Z"
+      }
+    },
+    {
+      "model": "sites.site",
+      "pk": 1,
+      "fields": { "domain": "example.com", "name": "example.com" }
+    },
+    {
+      "model": "posts.artpost",
+      "pk": 1,
+      "fields": {
+        "owner": 1,
+        "created_at": "2025-01-21T15:54:12.353Z",
+        "updated_at": "2025-03-10T12:45:14.302Z",
+        "title": "Post",
+        "content": "Content",
+        "image": "../default_post_tx8nvq",
+        "category": 4,
+        "image_filter": "oil_painting"
+      }
+    },
+    {
+      "model": "posts.artpost",
+      "pk": 3,
+      "fields": {
+        "owner": 1,
+        "created_at": "2025-01-29T01:06:26.175Z",
+        "updated_at": "2025-03-10T12:45:45.353Z",
+        "title": "Nature",
+        "content": "Beautiful painting of trees",
+        "image": "media/images/trees-7710539_1280_dzcgz3",
+        "category": 4,
+        "image_filter": "oil_painting"
+      }
+    },
+    {
+      "model": "posts.artpost",
+      "pk": 4,
+      "fields": {
+        "owner": 1,
+        "created_at": "2025-01-29T22:54:26.242Z",
+        "updated_at": "2025-03-10T12:46:03.944Z",
+        "title": "Bee",
+        "content": "Love bee",
+        "image": "media/images/bee-7666216_1280_cam4st",
+        "category": 3,
+        "image_filter": "watercolor"
+      }
+    },
+    {
+      "model": "posts.artpost",
+      "pk": 5,
+      "fields": {
+        "owner": 3,
+        "created_at": "2025-02-01T16:53:00.087Z",
+        "updated_at": "2025-02-01T16:53:00.087Z",
+        "title": "Art",
+        "content": "I love painting",
+        "image": "media/images/sea-7331682_1280_pjrvbm",
+        "category": 1,
+        "image_filter": "acrylic"
+      }
+    },
+    {
+      "model": "categories.category",
+      "pk": 1,
+      "fields": {
+        "name": "portrait",
+        "description": "A category for portraits",
+        "created_at": "2025-01-29T01:01:31.709Z"
+      }
+    },
+    {
+      "model": "categories.category",
+      "pk": 2,
+      "fields": {
+        "name": "landscape",
+        "description": "A category for landscapes",
+        "created_at": "2025-01-29T01:01:31.711Z"
+      }
+    },
+    {
+      "model": "categories.category",
+      "pk": 3,
+      "fields": {
+        "name": "Portrait",
+        "description": "Art focused on human or animal figures",
+        "created_at": "2025-03-10T12:29:41.515Z"
+      }
+    },
+    {
+      "model": "categories.category",
+      "pk": 4,
+      "fields": {
+        "name": "Landscape",
+        "description": "Art featuring natural scenery",
+        "created_at": "2025-03-10T12:29:41.527Z"
+      }
+    },
+    {
+      "model": "categories.category",
+      "pk": 5,
+      "fields": {
+        "name": "Abstract",
+        "description": "Non-representational and conceptual art",
+        "created_at": "2025-03-10T12:29:41.533Z"
+      }
+    },
+    {
+      "model": "categories.category",
+      "pk": 6,
+      "fields": {
+        "name": "Still Life",
+        "description": "Art depicting inanimate objects",
+        "created_at": "2025-03-10T12:29:41.538Z"
+      }
+    },
+    {
+      "model": "comments.comment",
+      "pk": 1,
+      "fields": {
+        "owner": 1,
+        "post": 1,
+        "parent": null,
+        "created_at": "2025-01-22T11:02:00.485Z",
+        "updated_at": "2025-01-22T11:04:16.890Z",
+        "content": "My very first comment"
+      }
+    },
+    {
+      "model": "comments.comment",
+      "pk": 2,
+      "fields": {
+        "owner": 1,
+        "post": 4,
+        "parent": null,
+        "created_at": "2025-01-29T22:56:21.296Z",
+        "updated_at": "2025-01-29T22:56:21.296Z",
+        "content": "I love bees"
+      }
+    },
+    {
+      "model": "likes.like",
+      "pk": 1,
+      "fields": {
+        "owner": 1,
+        "post": 3,
+        "created_at": "2025-01-29T22:32:44.375Z"
+      }
+    },
+    {
+      "model": "likes.like",
+      "pk": 2,
+      "fields": {
+        "owner": 1,
+        "post": 1,
+        "created_at": "2025-01-29T22:33:16.242Z"
+      }
+    },
+    {
+      "model": "likes.like",
+      "pk": 3,
+      "fields": {
+        "owner": 3,
+        "post": 3,
+        "created_at": "2025-02-01T16:53:31.977Z"
+      }
+    },
+    {
+      "model": "followers.follower",
+      "pk": 1,
+      "fields": {
+        "owner": 1,
+        "followed": 3,
+        "created_at": "2025-03-12T09:51:23.791Z"
+      }
+    },
+    {
+      "model": "followers.follower",
+      "pk": 2,
+      "fields": {
+        "owner": 1,
+        "followed": 2,
+        "created_at": "2025-03-12T09:51:33.947Z"
+      }
+    },
+    {
+      "model": "commentslikes.commentslikes",
+      "pk": 1,
+      "fields": {
+        "owner": 1,
+        "comment": 2,
+        "created_at": "2025-03-15T21:42:10.766Z"
+      }
+    }
+  ]
+  

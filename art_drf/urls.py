@@ -32,11 +32,11 @@ urlpatterns = [
 
 
     # Explicit app URLs
-    path('', include('profiles.urls')),
-    path('', include('posts.urls')),
-    path('', include('categories.urls')),
-    path('', include('comments.urls')),
-    path('', include('likes.urls')),
-    path('', include('followers.urls')),
-    path('', include('commentslikes.urls')),
+    path('profiles/', include('profiles.urls')),
+    path('posts/', include('posts.urls')),
+    path('categories/', include('categories.urls')),
+    path('comments/', include('comments.urls')),
+    path('likes/', include('likes.urls')),
+    path('followers/', include('followers.urls')),
+    path('commentslikes/', include('commentslikes.urls')),
 ]

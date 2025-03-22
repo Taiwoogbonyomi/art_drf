@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 import os
 import re  # noqa: F401
 import dj_database_url
@@ -35,7 +36,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication'
         if 'DEV' in os.environ
-        else 'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
+        else 'rest_framework_simplejwt.authentication.JWTAuthentication'
     ],
     'DEFAULT_PAGINATION_CLASS':
         'rest_framework.pagination.PageNumberPagination',
@@ -57,6 +58,13 @@ JWT_AUTH_COOKIE = 'my-app-auth'
 JWT_AUTH_REFRESH_COOKIE = 'my-refresh-token'
 JWT_AUTH_SAMESITE = 'None'
 
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "AUTH_HEADER_TYPES": ("Bearer",),
+}
 # Specify custom user details serializer
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'art_drf.serializers.CurrentUserSerializer'
@@ -126,6 +134,11 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ALLOW_CREDENTIALS = True
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:8000",
+]
+
 if 'DEV' in os.environ:
     CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
 
@@ -135,6 +148,7 @@ CORS_ALLOW_HEADERS = [
     "content-type",
     "x-csrftoken",
     "x-requested-with",
+    "access-control-allow-origin",
 ]
 
 CORS_ALLOW_METHODS = [

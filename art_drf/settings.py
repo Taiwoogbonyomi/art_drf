@@ -80,14 +80,9 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = 'DEBUG' in os.environ
 
 ALLOWED_HOSTS = [
-    "127.0.0.1",
-    "localhost",
-    "art-drf-api-f47791898f85.herokuapp.com",
+     os.environ.get('ALLOWED_HOST')
 ]
 
-CSRF_TRUSTED_ORIGINS = [
-    'https://8000-taiwoogbonyomi-artdrf-cuga41ksgqz.ws.codeinstitute-ide.net'
-]
 # Application definition
 
 INSTALLED_APPS = [
@@ -149,6 +144,8 @@ CORS_ALLOW_HEADERS = [
     "x-csrftoken",
     "x-requested-with",
     "access-control-allow-origin",
+    "accept",
+    "origin",
 ]
 
 CORS_ALLOW_METHODS = [

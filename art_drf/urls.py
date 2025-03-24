@@ -15,7 +15,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from dj_rest_auth.views import UserDetailsView
 from .views import root_route, logout_route
 
 urlpatterns = [
@@ -28,7 +27,6 @@ urlpatterns = [
     path('dj-rest-auth/', include('dj_rest_auth.urls')),
     path('dj-rest-auth/registration/',
          include('dj_rest_auth.registration.urls')),
-    path('dj-rest-auth/user/', UserDetailsView.as_view(), name='user_details'),
 
 
     # Explicit app URLs

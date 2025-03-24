@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
-from datetime import timedelta
 import os
 import re  # noqa: F401
 import dj_database_url
@@ -33,11 +32,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # use either session or JWT authentication as appropriate.
 # Also set up pagination and date/time format return in our JSON objects.
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
+    'DEFAULT_AUTHENTICATION_CLASSES': [(
         'rest_framework.authentication.SessionAuthentication'
-        if 'DEV' in os.environ
-        else 'rest_framework_simplejwt.authentication.JWTAuthentication'
-    ],
+        if 'USE_ADMIN' in os.environ
+        else 'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
+    )],
     'DEFAULT_PAGINATION_CLASS':
         'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
@@ -58,13 +57,6 @@ JWT_AUTH_COOKIE = 'my-app-auth'
 JWT_AUTH_REFRESH_COOKIE = 'my-refresh-token'
 JWT_AUTH_SAMESITE = 'None'
 
-SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
-    "ROTATE_REFRESH_TOKENS": True,
-    "BLACKLIST_AFTER_ROTATION": True,
-    "AUTH_HEADER_TYPES": ("Bearer",),
-}
 # Specify custom user details serializer
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'art_drf.serializers.CurrentUserSerializer'
@@ -80,7 +72,9 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = 'DEBUG' in os.environ
 
 ALLOWED_HOSTS = [
-     os.environ.get('ALLOWED_HOST')
+    os.environ.get('ALLOWED_HOST'),
+    'localhost',
+    '127.0.0.1'
 ]
 
 # Application definition
@@ -103,7 +97,6 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'dj_rest_auth.registration',
-    'rest_framework_simplejwt',
     'corsheaders',
 
     'profiles',

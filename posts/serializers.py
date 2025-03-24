@@ -17,25 +17,16 @@ class ArtPostSerializer(serializers.ModelSerializer):
     )
 
     def validate_image(self, value):
-        """Validate image size and dimensions."""
-        max_size = 2 * 1024 * 1024  # 2MB
-        max_dimension = 4096
-
-        if value.size > max_size:
+        if value.size > 2 * 1024 * 1024:
+            raise serializers.ValidationError('Image size larger than 2MB!')
+        if value.image.height > 4096:
             raise serializers.ValidationError(
-                'Image size must be less than 2MB!'
+                'Image height larger than 4096px!'
             )
-        width = getattr(value, 'width', None)
-        height = getattr(value, 'height', None)
-
-        if width is None or height is None:
-            raise serializers.ValidationError("Invalid image file.")
-
-        if width > max_dimension or height > max_dimension:
+        if value.image.width > 4096:
             raise serializers.ValidationError(
-                f"Image dimensions must be at most {max_dimension}px."
+                'Image width larger than 4096px!'
             )
-
         return value
 
     def to_representation(self, instance):

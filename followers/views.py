@@ -1,7 +1,8 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, serializers
 from art_drf.permissions import IsOwnerOrReadOnly
 from .models import Follower
 from .serializers import FollowerSerializer
+
 
 class FollowerList(generics.ListCreateAPIView):
     """
@@ -11,12 +12,15 @@ class FollowerList(generics.ListCreateAPIView):
     Perform_create: associate the current logged-in user with a follower.
     """
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    queryset = Follower.objects.select_related('owner', 'followed').order_by('-created_at')
+    queryset = Follower.objects.select_related(
+        'owner', 'followed').order_by('-created_at')
     serializer_class = FollowerSerializer
 
     def perform_create(self, serializer):
         if serializer.validated_data['followed'] == self.request.user:
-            raise serializers.ValidationError({"detail": "You cannot follow yourself."})
+            raise serializers.ValidationError(
+                {"detail": "You cannot follow yourself."}
+            )
         serializer.save(owner=self.request.user)
 
 
@@ -27,6 +31,6 @@ class FollowerDetail(generics.RetrieveDestroyAPIView):
     Destroy a follower, i.e. unfollow someone if owner.
     """
     permission_classes = [IsOwnerOrReadOnly]
-    queryset = Follower.objects.select_related('owner', 'followed').order_by('-created_at')
+    queryset = Follower.objects.select_related(
+        'owner', 'followed').order_by('-created_at')
     serializer_class = FollowerSerializer
-

@@ -131,3 +131,65 @@ its fields are:
 
 - created_at: A timestamp tracking when the follow action occurred.
 
+##
+# API Endpoints
+
+## **User & Authentication**
+| Method | Endpoint | Description |
+|--------|---------|-------------|
+| `POST` | `/api/auth/register/` | Register a new user |
+| `POST` | `/api/auth/login/` | Log in a user |
+| `POST` | `/api/auth/logout/` | Log out the current user |
+| `GET`  | `/api/auth/user/` | Retrieve the currently logged-in user |
+| `PUT`  | `/api/auth/user/update/` | Update user profile details |
+| `DELETE` | `/api/auth/user/delete/` | Delete a user account |
+
+## **Profile Management**
+| Method | Endpoint | Description |
+|--------|---------|-------------|
+| `GET`  | `/api/profiles/` | Get a list of all user profiles |
+| `GET`  | `/api/profiles/{id}/` | Retrieve a specific user profile |
+| `PUT`  | `/api/profiles/{id}/edit/` | Edit a user's profile |
+| `PUT`  | `/api/profiles/{id}/avatar/` | Update profile avatar |
+| `GET`  | `/api/profiles/{id}/followers/` | Get followers of a specific profile |
+
+## **Posts**
+| Method | Endpoint | Description |
+|--------|---------|-------------|
+| `GET`  | `/api/posts/` | Get a list of all posts |
+| `POST` | `/api/posts/create/` | Create a new post |
+| `GET`  | `/api/posts/{id}/` | Retrieve a specific post |
+| `PUT`  | `/api/posts/{id}/edit/` | Update a post |
+| `DELETE` | `/api/posts/{id}/delete/` | Delete a post |
+
+## **Categories**
+| Method | Endpoint | Description |
+|--------|---------|-------------|
+| `GET`  | `/api/categories/` | Get a list of all categories |
+| `POST` | `/api/categories/create/` | Create a new category |
+| `GET`  | `/api/categories/{id}/` | Retrieve a specific category |
+| `PUT`  | `/api/categories/{id}/edit/` | Update a category |
+| `DELETE` | `/api/categories/{id}/delete/` | Delete a category |
+
+## **Comments**
+| Method | Endpoint | Description |
+|--------|---------|-------------|
+| `GET`  | `/api/comments/` | Get all comments |
+| `POST` | `/api/comments/create/` | Create a new comment |
+| `GET`  | `/api/comments/{id}/` | Retrieve a specific comment |
+| `PUT`  | `/api/comments/{id}/edit/` | Edit a comment |
+| `DELETE` | `/api/comments/{id}/delete/` | Delete a comment |
+
+## **Likes**
+| Method | Endpoint | Description |
+|--------|---------|-------------|
+| `GET`  | `/api/likes/` | Get all likes |
+| `POST` | `/api/likes/create/` | Like a post or comment |
+| `DELETE` | `/api/likes/{id}/delete/` | Remove a like |
+
+## **Follow/Unfollow**
+| Method | Endpoint | Description |
+|--------|---------|-------------|
+| `GET`  | `/api/follows/` | Get all follow relationships |
+| `POST` | `/api/follows/create/` | Follow a user |
+| `DELETE` | `/api/follows/{id}/delete/` | Unfollow a user |

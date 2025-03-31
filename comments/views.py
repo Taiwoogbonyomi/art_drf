@@ -14,7 +14,11 @@ class CommentList(generics.ListCreateAPIView):
     """
     serializer_class = CommentSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    queryset = Comment.objects.select_related("owner", "post").filter(parent=None)
+    queryset = (
+        Comment.objects
+        .select_related("owner", "post")
+        .filter(parent=None)
+    )
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['post', "parent"]
 

@@ -1,131 +1,133 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Art
 
-Welcome Taiwo Ogbonyomi,
+## project goals
+This project provides a Django Rest Framework API for the [ArtConnect React web app](https://arts-8a67ad6d4259.herokuapp.com/).
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
+The primary goal of ArtConnect is:
+1) Provide a Platform for Artists to showcase their artwork and creative processes.
+2) Enable users to share art-related posts, updates, and inspirations.
+3) Facilitate artist meetups, workshops, and online collaborations.
+4) Encourage meaningful interactions through discussions and event sharing.
 
-You can safely delete this README.md file or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **June 18, 2024**
+## Table of contents
+- [Art_Drf](#art_drf)
+  * [Project goals](#project-goals)
+  * [Table of contents](#table-of-contents)
+  * [Planning](#planning)
+    + [Data models](#data-models)
+      - [**Home**](#--home--)
+      - [**Profile**](#--profile--)
+      - [**Post**](#--post--)
+      - [**Comments**](#--Comments--)
+    + [**Category**](#--category--)
+    + [**Followers**](#--followers--)
+  * [API endpoints](#api-endpoints)
+  * [Frameworks, libraries and dependencies](#frameworks--libraries-and-dependencies)
+    + [django-cloudinary-storage](#django-cloudinary-storage)
+    + [dj-allauth](#dj-allauth)
+    + [dj-rest-auth](#dj-rest-auth)
+    + [djangorestframework-simplejwt](#djangorestframework-simplejwt)
+    + [dj-database-url](#dj-database-url)
+    + [psychopg2](#psychopg2)
+    + [python-dateutil](#python-dateutil)
+    + [django-recurrence](#django-recurrence)
+    + [django-filter](#django-filter)
+    + [django-cors-headers](#django-cors-headers)
+     * [Testing](#testing)
+    + [Manual testing](#manual-testing)
+    + [Automated tests](#automated-tests)
+    + [Python validation](#python-validation)
 
-## Gitpod Reminders
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+  ### Data models
+This art blog is built around a structured database that allows users to share their artwork, engage with others through likes and comments, follow their favorite artists, and potentially join events. The models ensure that content is well-organized, interactive, and community-driven, fostering a dynamic art-sharing experience.
 
-`python3 -m http.server`
+Data model schema were planned in parallel with the API endpoints, using an entity relationship diagram.
 
-A blue button should appear to click: _Make Public_,
+Custom models implemented for ArtConnect are:
 
-Another blue button should appear to click: _Open Browser_.
+#### **Profile Model**
+Extends the built-in user model to store additional details about each user. Also helps personalize user accounts with avatars and bios.
+The fields are:
+- user: A one-to-one relationship with Django’s User model.
 
-To run a backend Python file, type `python3 app.py` if your Python file is named `app.py`, of course.
+- bio: A text field allowing users to add a short description about themselves.
 
-A blue button should appear to click: _Make Public_,
+- avatar: An image field for profile pictures.
 
-Another blue button should appear to click: _Open Browser_.
+- location: An optional field for users to add their location.
 
-By Default, Gitpod gives you superuser security privileges. Therefore, you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+- created_at: A timestamp that records when the profile was created.
 
-To log into the Heroku toolbelt CLI:
+#### **Post Model**
+Represents a piece of art content shared by a user. Allows users to share their artwork and engage with others, supports likes and comments to encourage interaction.
 
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
+its fields are:
 
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you, so do not share it. If you accidentally make it public, you can create a new one with _Regenerate API Key_.
+- owner: A foreign key linking the post to the user who created it.
 
-### Connecting your Mongo database
+- title: A short, descriptive title for the artwork.
 
-- **Connect to Mongo CLI on a IDE**
-- navigate to your MongoDB Clusters Sandbox
-- click **"Connect"** button
-- select **"Connect with the MongoDB shell"**
-- select **"I have the mongo shell installed"**
-- choose **mongosh (2.0 or later)** for : **"Select your mongo shell version"**
-- choose option: **"Run your connection string in your command line"**
-- in the terminal, paste the copied code `mongo "mongodb+srv://<CLUSTER-NAME>.mongodb.net/<DBname>" --apiVersion 1 --username <USERNAME>`
-  - replace all `<angle-bracket>` keys with your own data
-- enter password _(will not echo **\*\*\*\*** on screen)_
+- content: A text field for an optional description or artist’s thoughts.
 
-------
+- image: The main image of the post, showcasing the artwork.
 
-## Release History
+- category: A foreign key linking the post to a Category.
 
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
+- likes_count: A counter that tracks the number of likes on the post.
 
-**June 18, 2024,** Add Mongo back into template
+- comments_count: A counter tracking the number of comments.
 
-**June 14, 2024,** Temporarily remove Mongo until the key issue is resolved
+- created_at: A timestamp recording when the post was created.
 
-**May 28 2024:** Fix Mongo and Links installs
+- updated_at: A timestamp for tracking modifications.
 
-**April 26 2024:** Update node version to 16
 
-**September 20 2023:** Update Python version to 3.9.17.
+#### **Category Model**
+Groups posts into predefined categories based on the type of art. Helps organize artwork for better user experience and ensures posts are grouped under relevant themes.
 
-**September 1 2021:** Remove `PGHOSTADDR` environment variable.
+its fields are:
+- name: A unique name for the category (e.g., Portrait, Landscape, Digital Art).
 
-**July 19 2021:** Remove `font_fix` script now that the terminal font issue is fixed.
+- description: An optional text field describing the category.
 
-**July 2 2021:** Remove extensions that are not available in Open VSX.
+- created_at: A timestamp tracking when the category was created.
 
-**June 30 2021:** Combined the P4 and P5 templates into one file, added the uptime script. See the FAQ at the end of this file.
+#### **Comment Model**
+Enables users to interact with posts by leaving comments. Users can interact with posts through feedback and discussions.
 
-**June 10 2021:** Added: `font_fix` script and alias to fix the Terminal font issue
+its fields are:
+- owner: A foreign key linking the comment to the user who wrote it.
 
-**May 10 2021:** Added `heroku_config` script to allow Heroku API key to be stored as an environment variable.
+- post: A foreign key linking the comment to the related post.
 
-**April 7 2021:** Upgraded the template for VS Code instead of Theia.
+- content: The text body of the comment.
 
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
+- parent: A self-referential field that allows comments to be replies to other comments (nested comments).
 
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
+- created_at: A timestamp tracking when the comment was made.
 
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
+- updated_at: A timestamp for tracking comment edits.
 
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
+#### **Like Model**
+Tracks user likes on posts and comments to measure engagement and enhances the interactive experience of the platform.
 
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
+its fields are:
+- owner: A foreign key linking the like to the user who made it.
 
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
+- post: A foreign key linking the like to a specific post (if applicable).
 
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
+- comment: A foreign key linking the like to a specific comment (if applicable).
 
-------
+- created_at: A timestamp recording when the like was made.
 
-## FAQ about the uptime script
+#### **Follower Model**
+Manages the relationships between users, allowing them to follow each other. It prevents self-following and duplicate follows through validation.
 
-**Why have you added this script?**
+its fields are:
+- owner: A foreign key linking the follower to the user who is following.
 
-It will help us to calculate how many running workspaces there are at any one time, which greatly helps us with cost and capacity planning. It will help us decide on the future direction of our cloud-based IDE strategy.
+- followed: A foreign key linking the user being followed.
 
-**How will this affect me?**
+- created_at: A timestamp tracking when the follow action occurred.
 
-For everyday usage of Gitpod, it doesn’t have any effect at all. The script only captures the following data:
-
-- An ID that is randomly generated each time the workspace is started.
-- The current date and time
-- The workspace status of “started” or “running”, which is sent every 5 minutes.
-
-It is not possible for us or anyone else to trace the random ID back to an individual, and no personal data is being captured. It will not slow down the workspace or affect your work.
-
-**So….?**
-
-We want to tell you this so that we are being completely transparent about the data we collect and what we do with it.
-
-**Can I opt out?**
-
-Yes, you can. Since no personally identifiable information is being captured, we'd appreciate it if you let the script run; however if you are unhappy with the idea, simply run the following commands from the terminal window after creating the workspace, and this will remove the uptime script:
-
-```
-pkill uptime.sh
-rm .vscode/uptime.sh
-```
-
-**Anything more?**
-
-Yes! We'd strongly encourage you to look at the source code of the `uptime.sh` file so that you know what it's doing. As future software developers, it will be great practice to see how these shell scripts work.
-
----
-
-Happy coding!

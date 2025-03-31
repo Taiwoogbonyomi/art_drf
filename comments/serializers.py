@@ -16,9 +16,12 @@ class CommentSerializer(serializers.ModelSerializer):
     updated_at = serializers.SerializerMethodField()
 
     def get_is_owner(self, obj):
-        """Checks if the requesting user is the owner of the comment."""
+        """Check if the requesting user is the owner of the comment."""
         request = self.context.get("request")
-        return request.user.is_authenticated and obj.owner == request.user if request else False
+
+        if request:
+            return request.user.is_authenticated and obj.owner == request.user
+        return False
 
     def get_created_at(self, obj):
         """Returns a human-readable timestamp (e.g., '5 minutes ago')."""

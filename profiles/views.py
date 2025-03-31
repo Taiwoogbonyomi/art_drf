@@ -1,8 +1,7 @@
 from django.db.models import Count
-from rest_framework import generics, permissions, filters
+from rest_framework import generics,  filters
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.generics import get_object_or_404
-from rest_framework.response import Response
 from .models import Profile
 from .serializers import ProfileSerializer
 from art_drf.permissions import IsOwnerOrReadOnly
@@ -11,11 +10,12 @@ from art_drf.permissions import IsOwnerOrReadOnly
 class ProfileList(generics.ListAPIView):
     """
     List all profiles.
-    No create view (POST method), as profile creation is handled by Django signals.
+    No create view (POST method),
+    as profile creation is handled by Django signals.
     """
     serializer_class = ProfileSerializer
     filter_backends = [
-        filters.SearchFilter, 
+        filters.SearchFilter,
         filters.OrderingFilter,
         DjangoFilterBackend
     ]
@@ -24,12 +24,12 @@ class ProfileList(generics.ListAPIView):
         'owner__followed__owner__profile'
     ]
     search_fields = [
-        'owner__username', 
+        'owner__username',
         'name'
     ]
     ordering_fields = [
-        'posts_count', 
-        'followers_count', 
+        'posts_count',
+        'followers_count',
         'following_count',
         'owner__following__created_at',
         'owner__followed__created_at',
@@ -49,7 +49,7 @@ class ProfileList(generics.ListAPIView):
         username = self.request.query_params.get('username')
         if username:
             queryset = queryset.filter(owner__username=username)
-        
+
         return queryset
 
 

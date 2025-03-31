@@ -193,3 +193,22 @@ its fields are:
 | `GET`  | `/api/follows/` | Get all follow relationships |
 | `POST` | `/api/follows/create/` | Follow a user |
 | `DELETE` | `/api/follows/{id}/delete/` | Unfollow a user |
+
+# Database Schema
+
+### Explanations of Relationships
+- Users & Posts: A user can create many posts (One-to-Many).
+
+- Users & Comments: A user can comment on many posts (One-to-Many).
+
+- Users & Likes: A user can like many posts (One-to-Many).
+
+- Users & Follows: Users can follow each other (Self-referential Many-to-Many).
+
+- Posts & Comments: A post can have multiple comments (One-to-Many).
+
+- Comments & CommentLikes: Users can like comments (One-to-Many).
+
+- Users & Events: Users can host events (One-to-Many).
+
+- Users & Event Registrations: Users can register for events (Many-to-Many through EventRegistration).
